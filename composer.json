@@ -22,11 +22,6 @@
             "url": "https://github.com/Cotya/magento-composer-installer.git"
         }
     ],
-    "autoload": {
-        "psr-0": {
-            "Webbhuset_Geoip_": "app/code/community/"
-        }
-    },
     "extra": {
         "map": [
             [
