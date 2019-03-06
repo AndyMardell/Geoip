@@ -45,6 +45,17 @@
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
                         </lock>
+                        <query translate="label comment">
+                            <label>Append query string</label>
+                            <comment>Append ?redirect=true to the URL when a user is redirected.</comment>
+                            <sort_order>25</sort_order>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <default>1</default>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </query>
                         <fallback translate="label comment">
                             <label>Fallback store for not allowed countries</label>
                             <comment>The stor you want to redirect to for countries that are not in the allowed country list on any store.</comment>

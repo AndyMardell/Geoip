@@ -31,6 +31,7 @@ class Webbhuset_Geoip_Model_Observer
     {
         $enabled        = Mage::getStoreConfigFlag('webbhusetgeoip/general/enabled');
         $lockStore      = Mage::getStoreConfigFlag('webbhusetgeoip/general/lock');
+        $showQuery      = Mage::getStoreConfigFlag('webbhusetgeoip/general/query');
         $exceptions     = $this->_getExceptions();
         $fallbackStore  = $this->_getFallbackStore();
 
@@ -57,8 +58,8 @@ class Webbhuset_Geoip_Model_Observer
 
         Mage::dispatchEvent('wh_geoip_redirect_store_before', ['result' => $result]);
 
-        if (
-            isset($_SERVER['HTTP_USER_AGENT']) && preg_match('/bot|crawl|slurp|spider/i', $_SERVER['HTTP_USER_AGENT'])
+        if (isset($_SERVER['HTTP_USER_AGENT'])
+            && preg_match('/bot|crawl|slurp|spider/i', $_SERVER['HTTP_USER_AGENT'])
         ) {
             $result->setShouldProceed(false);
         }
@@ -100,9 +101,15 @@ class Webbhuset_Geoip_Model_Observer
             $session->setNotInAllowedList(true);
         }
 
+        $storeUrl = $store->getCurrentUrl(false);
+
+        if ($currentCountry && $showQuery) {
+            $storeUrl = Mage::helper('core/url')->addRequestParam($storeUrl, ['redirected' => 'true']);
+        }
+
         $event = new Varien_Object(
             [
-                'store_url' => $store->getCurrentUrl(false),
+                'store_url' => $storeUrl,
             ]
         );
 
